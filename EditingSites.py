@@ -27,60 +27,57 @@ class Mismatch :
 	def __str__(self):
 		return ' '+self.seqname+'  '+str(self.pos)+'  '+self.strand+'  '+self.reference+'  '+str(self.ACGT)+'  '+str(self.coverage)
 
-class Mismatch_Base :
-	base = []
+class  ADAR_Mismatch_Base :
+	#  Linked_list
+	#  СПРОСИТЬ ИРУ
+	__base = []
 	base_len = 0
 
+	def __init__ (self, file_path) :
+		print "--------------------------------------------------------------\n\
+	    	 \rStarted possible ADAR editing sites base initialization.\n"
+
+		tic = time.clock()
+
+		with open(file_path) as file :
+			file_len = count_file_lines(file)
+
+			i = 0
+			for line in file :
+				#  Get site information 
+				line = line.strip().split()
+
+				#  Checking can_be_ADAR_editing parameter value
+				if line[-1] == "TRUE" :
+					#  CSV parameters order:
+					#  seqnames, pos, strand, reference, A, C, G, T, coverage, can_be_ADAR_editing
+					self.__base.append(Mismatch(line[0], line[1], line[2], line[3], line[4:8], line[8]))
+					
+				if i%7000 == 0 : progress_bar(i, file_len)
+				i+=1
+
+			self.base_len = len(self.__base)
+
+
+			toc = time.clock()
+			execution_duration = toc-tic
+			
+			progress_bar (1,1) 
+			print "\n"
+
+			print "Initialization completed.\nTime estimated -- {0}.\n\
+			   	 \r--------------------------------------------------------------\n"\
+			   	   .format(execution_duration)
 
 	def __getitem__ (self, key) :
 		if abs(key) > self.base_len : raise IndexError
 		
-		return self.mismatches[key]
+		return self.base[key]
 
 	def __iter__ (self) :
-		for val in self.base :
-			yield val
+		return iter(self.base)
 
-			
-
-#  Filters by 'can_be_ADAR_editing' parameter
-def filter_ADAR_probability (file_path) :
-	print "--------------------------------------------------------------\n\
-	     \rStarted filtering sites with positive ADAR editing probability.\n"
-
-	tic = time.clock()
-
-	with open(file_path) as file :
-		
-		sites = []
-
-		all_sites_count = count_file_lines(file)
-
-		i = 0
-		for line in file :
-			line = line.strip().split()
-
-			#Checking can_be_ADAR_editing parameter value
-			if line[-1] == "TRUE" :
-				#  CSV parameters order:
-				#  seqnames, pos, strand, reference, A, C, G, T, coverage, can_be_ADAR_editing
-				sites.append(Mismatch(line[0], line[1], line[2], line[3], line[4:8], line[8]))
-				
-			if i%7000 == 0 : progress_bar(i, all_sites_count)
-			i+=1
-		
-		toc = time.clock()
-		execution_duration = toc-tic
-		
-		progress_bar (1,1) 
-		print "\n"
-
-		print "Filtering ended.\nTime estimated -- {0}.\n\
-		   	 \r--------------------------------------------------------------\n"\
-		   	   .format(execution_duration)
-
-		return sites
-
+print "\n"
 #--------------------------------
 #Argument parser initialization 
 parser = argparse.ArgumentParser(description='Count mismathches on gene alignment.')
@@ -94,14 +91,13 @@ args = parser.parse_args()
 #Filtering sites
 all_sites_qty = count_file_lines(open(args.firstFilePath))
 
-filtered_sites = filter_ADAR_probability (args.firstFilePath)
-filtered_sites_qty = len(filtered_sites)
+sites = ADAR_Mismatch_Base (args.firstFilePath)
 #--------------------------------
 
 print "--------------------------------------------------------------\n\
 	 \rProcess ended.\nPotentional sites - {0}.\nAll sites - {1}.\nPercentage - {2:f}%.\n\
   	 \r--------------------------------------------------------------\n"\
-	 .format(filtered_sites_qty, all_sites_qty, 100*filtered_sites_qty/float(all_sites_qty))
+	 .format(sites.base_len, all_sites_qty, 100*sites.base_len/float(all_sites_qty))
 
 
 
