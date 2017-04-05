@@ -16,8 +16,21 @@ def filter_by_coverage (site_df, threshold) :
 
 #  Filters absolute edit value
 def filter_by_absolute_TG_replacement(site_df, threshold) :
-	return site_df[site_df["G"] > threshold]\
-   .append(site_df[site_df["C"] > threshold])
+	straight_strand_filtered   = site_df[site_df["strand"] == '+']
+	reverse_strand_filtered  = site_df[site_df["strand"] == '-']
+
+	return straight_strand_filtered[ straight_strand_filtered['G'] > threshold ]\
+    .append(reverse_strand_filtered[  reverse_strand_filtered['C'] > threshold ])
+
+#  Filters by ratio of substituion coverage to whole coverage
+def filter_by_relative_substitution (site_df, threshold) :
+	straight_strand_filtered = site_df[site_df["strand"] == '+']
+	reverse_strand_filtered  = site_df[site_df["strand"] == '-']
+
+
+	return straight_strand_filtered[ straight_strand_filtered['G']/straight_strand_filtered["coverage" ]  > threshold ]\
+    .append(reverse_strand_filtered[  reverse_strand_filtered['C']/ reverse_strand_filtered["coverage" ]  > threshold ])
+
 
 #  Applies all the filters on sites dataFrame
 def filter (site_df, coverage_threshold, absolute_substitution_threshold) :
