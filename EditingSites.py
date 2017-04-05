@@ -90,9 +90,9 @@ class  AdarMismatchBase :
 
 class CommonSitesFinder :
 
-	#  Finds common potentional Adar editing sites between two sources.
+	#  Finds common potentional Adar editing sites between two TSV files.
 	@staticmethod
-	def find_common (f1, f2) :
+	def find_common_between_files (f1, f2) :
 
 		print "\n--------------------------------------------------------------\n\
 	    	   \rStarted common possible ADAR editing sites search.\n"
@@ -134,9 +134,8 @@ class CommonSitesFinder :
 
 		return common_sites
 
-
 	@staticmethod
-	def _fill_dict (sites, f) :
+	def _fill_dict_filter (sites, f) :
 		print "\n  Filling dictionary..."
 
 		file_len = count_file_lines(f)
@@ -157,7 +156,12 @@ class CommonSitesFinder :
 			i += 1
 
 		progress_bar(1,1)	
-		print "\n\n"		
+		print "\n\n"
+
+	@staticmethod 
+	def find_common_between_data_frames (df1, df2) :
+		common = pd.merge(df1, df2, on='pos', how='inner')
+		print common			
 
 class DecentTsvFiltering:
 
@@ -240,54 +244,71 @@ class DecentTsvFiltering:
 		toc = time.clock()
 		execution_duration = toc-tic
 
-		return filtered
-
 		print "\nEndend filtering process. Time estimated - {0}\n\
 		   	   \r--------------------------------------------------------------\n"\
 		   	   .format(execution_duration)
 
-#---------------------------------
+		return filtered
+
+#-------------------------------------
 #  Argument parser initialization
-#---------------------------------
+#-------------------------------------
 parser = argparse.ArgumentParser(description='Count mismathches on gene alignment.')
 
 parser.add_argument('-f1', '--firstFilePath',        type=str, help='tsv file with mismatch information')
-parser.add_argument('-f2', '--secondFilePath',       type=str, help='another tsv file with mismatch information', default = None)
+parser.add_argument('-f2', '--secondFilePath',       type=str, help='tsv file with mismatch information', default = None)
+parser.add_argument('-f3', '--thirdFilePath',        type=str, help='tsv file with mismatch information', default = None)
 
-parser.add_argument('-c',  '--coverage', 	         type=int, help='minimal coverage for site',                  default = 0)
+
+parser.add_argument('-c',  '--fullCoverage', 	     type=int, help='minimal coverage for site',                  default = 0)
 parser.add_argument('-as', '--absoluteSubstitution', type=int, help='minimal coverage for edited site',           default = 0)
 
 args = parser.parse_args()
-#---------------------------------
+#-------------------------------------
 
-#---------------------------------
+#-------------------------------------
 #  Filtering sites
-#---------------------------------
+#-------------------------------------
 #all_sites_qty = count_file_lines(open(args.firstFilePath))
 #sites = AdarMismatchBase (args.firstFilePath)
 #print "--------------------------------------------------------------\n\
 #	 \rProcess ended.\nPotentional sites - {0}.\nAll sites - {1}.\nPercentage - {2:f}%.\n\
 #  	 \r--------------------------------------------------------------\n"\
 #	 .format(sites.base_len, all_sites_qty, 100*sites.base_len/float(all_sites_qty))
-#---------------------------------
+#-------------------------------------
 
-#---------------------------------
-#  Filtering sites in  a right way
-#---------------------------------
-site_df = DecentTsvFiltering.read_tsv(args.firstFilePath)
-filtered = DecentTsvFiltering.filter(site_df)
-
-print filtered
-#---------------------------------
-
-#---------------------------------
+#-------------------------------------
 #  Finding common sites
-#---------------------------------
+#-------------------------------------
 #
 #with open(args.firstFilePath) as f1:
 #	with open(args.secondFilePath) as f2:
 #		print CommonSitesFinder.find_common(f1,f2)
-#---------------------------------
+#
+#-------------------------------------
+
+#-------------------------------------
+#  Initialising Dataframes
+#-------------------------------------
+first_site_df = DecentTsvFiltering.read_tsv(args.firstFilePath)
+second_site_df = DecentTsvFiltering.read_tsv(args.secondFilePath)
+#-------------------------------------
+
+
+#-------------------------------------
+#  Filtering sites in a right way
+#-------------------------------------
+#filtered = DecentTsvFiltering.filter(site_df, args.fullCoverage, args.absoluteSubstitution)
+#
+#print filtered
+#-------------------------------------
+
+#-------------------------------------
+#  Finding common sites in a right way
+#-------------------------------------
+common = CommonSitesFinder.find_common_between_data_frames(first_site_df, second_site_df)
+print common
+#-------------------------------------
 
 
 
