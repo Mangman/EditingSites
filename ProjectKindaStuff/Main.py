@@ -8,6 +8,8 @@ pd.set_option('expand_frame_repr', False)
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
+from tqdm import tqdm
+
 import numpy as np
 
 import time 
@@ -33,7 +35,6 @@ parser.add_argument('-f3', '--thirdFilePath',        type=str,
 													 help='tsv file with mismatch information',
 													 default = None)
 
-
 parser.add_argument('-fc',  '--fullCoverage', 	     type=int, 
 													 help='minimal coverage for site',                  
 													 default = 0)
@@ -47,6 +48,14 @@ parser.add_argument('-rs', '--relativeSubstitution', type=float,
 													       substitution/coverage ratio',        
 													 default = 0.05)
 
+parser.add_argument('-d', '--clusterDistance',       type=int, 
+													 help='maximal distance between cluster members',        
+													 default = 0)
+
+parser.add_argument('-cl', '--clusterLength',        type=int, 
+													 help='minimal length of sites cluster',        
+													 default = 0)
+
 
 args = parser.parse_args()
 #-------------------------------------
@@ -55,11 +64,11 @@ args = parser.parse_args()
 #  Initialising Dataframes
 #-------------------------------------
 first_site_df  = TsvReader.read_tsv(args.firstFilePath)
-second_site_df = TsvReader.read_tsv(args.secondFilePath)
+# second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
-if (args.thirdFilePath == None) :
-	print ("oh no!")
-	sys.exit()
+# if (args.thirdFilePath == None) :
+# 	print ("oh no!")
+# 	sys.exit()
 
 third_site_df = TsvReader.read_tsv(args.thirdFilePath)
 
@@ -73,139 +82,106 @@ third_site_df = TsvReader.read_tsv(args.thirdFilePath)
 # first_filtered  = TsvFiltering.filter_by_relative_substitution( first_site_df, args.relativeSubstitution)
 # second_filtered = TsvFiltering.filter_by_relative_substitution(second_site_df, args.relativeSubstitution)
 
-def filter_two (first_site_df, second_site_df, plot_color) :
-	#  TODO: сделать абстрактно
-	phases = [1,2,3]
-	sites = []
-
-	numbers = pd.DataFrame([ [0.]*4, [0.]*4, [0.]*4 ],
-							columns= ["original", "first_phase", "second_phase", "third_phase"], 
-							index =  ["first", "second", "merged"])
-
-	original_common = Tools.find_common_between_data_frames(first_site_df, second_site_df)
-
-	numbers["original"][0] = (len(first_site_df))
-	numbers["original"][1] = (len(second_site_df))
-	numbers["original"][2] = (len(original_common))
 
 
-	first_phase_result1  = ft.filter_by_absolute_TG_replacement(first_site_df,  args.absoluteSubstitution)
-	first_phase_result2  = ft.filter_by_absolute_TG_replacement(second_site_df, args.absoluteSubstitution)
-	first_phase_common = Tools.find_common_between_data_frames(first_phase_result1, first_phase_result2)
+# ft.filter_two (first_site_df, second_site_df, "r", args)
+# ft.filter_two (first_site_df,  third_site_df, "g", args)
+# ft.filter_two (second_site_df, third_site_df, "b", args)
 
-	numbers["first_phase"][0] = (100*len(first_phase_result1)/float(numbers["original"][0]))
-	numbers["first_phase"][1] = (100*len(first_phase_result2)/float(numbers["original"][1]))
-	numbers["first_phase"][2] = (100*len(first_phase_common) /float(numbers["original"][2]))
+# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
 
-	second_phase_result1  = ft.filter_by_coverage(first_phase_result1,  args.fullCoverage)
-	second_phase_result2  = ft.filter_by_coverage(first_phase_result2,  args.fullCoverage)
-	second_phase_common = Tools.find_common_between_data_frames(second_phase_result1, second_phase_result2)
+# red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
+# green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
+# blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
+# magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
 
-	numbers["second_phase"][0] = (100*len(second_phase_result1)/float(numbers["original"][0]))
-	numbers["second_phase"][1] = (100*len(second_phase_result2)/float(numbers["original"][1]))
-	numbers["second_phase"][2] = (100*len(second_phase_common)/ float(numbers["original"][2]))
+# plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
 
-	third_phase_result1  = ft.filter_by_relative_substitution(second_phase_result1,  args.relativeSubstitution)
-	third_phase_result2  = ft.filter_by_relative_substitution(second_phase_result2,  args.relativeSubstitution)
-	third_phase_common = Tools.find_common_between_data_frames(third_phase_result1, third_phase_result2)
+# plt.show()
 
-	numbers["third_phase"][0] = (100*len(third_phase_result1)/float(numbers["original"][0]))
-	numbers["third_phase"][1] = (100*len(third_phase_result2)/float(numbers["original"][1]))
-	numbers["third_phase"][2] = (100*len(third_phase_common) /float(numbers["original"][2]))
-
-	numbers["original"][0] = 100
-	numbers["original"][1] = 100
-	numbers["original"][2] = 100
-
-	print numbers
-
-	plt.plot (np.array([0, 1, 2, 3]), np.array(numbers.loc["merged"][:]), color=plot_color)
-	
-def filter_three (first_site_df, second_site_df, third_site_df, plot_color) :
-	#  TODO: сделать абстрактно
-	phases = [1,2,3]
-	sites = []
-
-	numbers = pd.DataFrame([ [0.]*4, [0.]*4, [0.]*4, [0.]*4],
-							columns= ["original", "first_phase", "second_phase", "third_phase"], 
-							index =  ["first", "second", "third", "merged"])
-
-	original_common = Tools.find_common_between_data_frames(first_site_df, second_site_df)
-	original_common = Tools.find_common_between_data_frames(original_common, third_site_df)
+#-------------------------------------
 
 
-	numbers["original"][0] = (len(first_site_df))
-	numbers["original"][1] = (len(second_site_df))
-	numbers["original"][2] = (len(third_site_df))
-	numbers["original"][3] = (len(original_common))
+#-------------------------------------
+#  Finding clusters
+#-------------------------------------
 
 
-	first_phase_result1  = ft.filter_by_absolute_TG_replacement(first_site_df,  args.absoluteSubstitution)
-	first_phase_result2  = ft.filter_by_absolute_TG_replacement(second_site_df, args.absoluteSubstitution)
-	first_phase_result3  = ft.filter_by_absolute_TG_replacement(third_site_df, args.absoluteSubstitution)
-	
-	first_phase_common = Tools.find_common_between_data_frames(first_phase_result1, first_phase_result2)
-	first_phase_common = Tools.find_common_between_data_frames(first_phase_common, first_phase_result3)
+#------------------------
+# cluster_params = []
+# cluster_lengths = []
+
+# for cluster_length in tqdm(range (5,100,5)) :
+# 	cluster_params.append(cluster_length)
+# 	cluster_lengths.append(ft.find_clusters (first_site_df, 500, cluster_length)[0])
+
+# plt.plot (cluster_params, cluster_lengths, color='m')
+# plt.xlabel('min #\n(max site distance - 500)') 
+# plt.ylabel('number of clusters')
 
 
-	numbers["first_phase"][0] = (100*len(first_phase_result1)/float(numbers["original"][0]))
-	numbers["first_phase"][1] = (100*len(first_phase_result2)/float(numbers["original"][1]))
-	numbers["first_phase"][2] = (100*len(first_phase_result3)/float(numbers["original"][2]))
-	numbers["first_phase"][3] = (100*len(first_phase_common) /float(numbers["original"][3]))
+# cluster_params = []
+# cluster_lengths = []
 
-	second_phase_result1  = ft.filter_by_coverage(first_phase_result1,  args.fullCoverage)
-	second_phase_result2  = ft.filter_by_coverage(first_phase_result2,  args.fullCoverage)
-	second_phase_result3  = ft.filter_by_coverage(first_phase_result3,  args.fullCoverage)
-	
-	second_phase_common = Tools.find_common_between_data_frames(second_phase_result1, second_phase_result2)
-	second_phase_common = Tools.find_common_between_data_frames(second_phase_common, second_phase_result3)
+# for cluster_length in tqdm(range (5,100,5)) :
+# 	cluster_params.append(cluster_length)
+# 	cluster_lengths.append(ft.find_clusters (first_site_df, 900, cluster_length)[0])
+
+#plt.plot (cluster_params, cluster_lengths, color='b')
+#------------------------
 
 
-	numbers["second_phase"][0] = (100*len(second_phase_result1)/float(numbers["original"][0]))
-	numbers["second_phase"][1] = (100*len(second_phase_result2)/float(numbers["original"][1]))
-	numbers["second_phase"][2] = (100*len(second_phase_result2)/float(numbers["original"][2]))
-	numbers["second_phase"][3] = (100*len(second_phase_common)/ float(numbers["original"][3]))
+#------------------------
+# cluster_params = []
+# cluster_lengths = []
 
-	third_phase_result1  = ft.filter_by_relative_substitution(second_phase_result1,  args.relativeSubstitution)
-	third_phase_result2  = ft.filter_by_relative_substitution(second_phase_result2,  args.relativeSubstitution)
-	third_phase_result3  = ft.filter_by_relative_substitution(second_phase_result3,  args.relativeSubstitution)
+# for distance in tqdm(range (300,1500,100)) :
+# 	cluster_params.append(distance)
+# 	cluster_lengths.append(ft.find_clusters (first_site_df, distance, 5)[0])
 
-
-	third_phase_common = Tools.find_common_between_data_frames(third_phase_result1, third_phase_result2)
-	third_phase_common = Tools.find_common_between_data_frames(third_phase_common, third_phase_result3)
-
-
-	numbers["third_phase"][0] = (100*len(third_phase_result1)/float(numbers["original"][0]))
-	numbers["third_phase"][1] = (100*len(third_phase_result2)/float(numbers["original"][1]))
-	numbers["third_phase"][2] = (100*len(third_phase_result3)/float(numbers["original"][2]))
-	numbers["third_phase"][3] = (100*len(third_phase_common) /float(numbers["original"][3]))
-
-	numbers["original"][0] = 100
-	numbers["original"][1] = 100
-	numbers["original"][2] = 100
-	numbers["original"][3] = 100
-
-	print numbers
-
-	plt.plot (np.array([0, 1, 2, 3]), np.array(numbers.loc["merged"][:]), color=plot_color)
-	
+# plt.plot (cluster_params, cluster_lengths, color='b')
+# plt.xlabel('max site distance\n(min # - 5)') 
+# plt.ylabel('number of clusters')
+#------------------------
 
 
-filter_two (first_site_df, second_site_df, "r")
-filter_two (first_site_df,  third_site_df, "g")
-filter_two (second_site_df, third_site_df, "b")
 
-filter_three (first_site_df, second_site_df, third_site_df, "m")
+#------------------------
+# data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
 
-red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
-green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
-blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
-magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
+# plt.hist(data[2], 150)
+# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
+# plt.ylabel('number of clusters')
+#------------------------
 
-plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
+#------------------------
+# data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
+
+# plt.hist(data[1], 150)
+# plt.xlabel('number of sites\n(min len - 10, max dist - 500)') 
+# plt.ylabel('number of clusters')
+#------------------------
+
+#------------------------
+data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
+
+plt.plot(data[2], data[1], '.')
+plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
+plt.ylabel('number of sites')
+#------------------------
+
 
 
 plt.show()
+
+
+# with open("result.lol", 'w') as f :
+# 	# for length in data[2] :
+# 	# 	f.write(length)
+# 	sys.stdout = f 
+# 	for length in data[2] :
+# 		print length
+
 
 #-------------------------------------
 
