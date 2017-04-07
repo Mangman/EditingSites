@@ -10,9 +10,13 @@ import numpy as np
 
 import time 
 
+import collections
+
 from Utilities import  progress_bar
 
 import MismatchDataFrameTools as Tools
+
+import operator
 
 #  Filters read coverage
 def filter_by_coverage (site_df, threshold) :
@@ -35,7 +39,6 @@ def filter_by_relative_substitution (site_df, threshold) :
 
 	return straight_strand_filtered[ straight_strand_filtered['G']/straight_strand_filtered["coverage" ]  > threshold ]\
     .append(reverse_strand_filtered[  reverse_strand_filtered['C']/ reverse_strand_filtered["coverage" ]  > threshold ])
-
 
 #  Applies all the filters on sites dataFrame
 def filter (site_df, coverage_threshold, absolute_substitution_threshold) :
@@ -175,15 +178,54 @@ def mean_coverage (value, full1, full2, full3) :
 
 
 #  Finds sites situated close to each other based on threholds
-def find_clusters (site_df, distance, c_len) :
-	
+def get_clusters (site_df, distance, c_len) :
 	straight_strand_filtered = site_df[site_df["strand"] == '+']
 	reverse_strand_filtered  = site_df[site_df["strand"] == '-']
 
 	clusters = [fill_clusters(straight_strand_filtered, distance, c_len), 
 				fill_clusters(reverse_strand_filtered, distance, c_len) ]
 
-	# Обернуть в класс
+	return clusters
+
+# def qualitative_info (clusters) :
+# 	site = collections.namedTuple ("site", 
+# 								   "seqnames pos strand reference A C G T coverage can_be_APOBEC_editin")
+
+def fill_clusters (site_df, distance, c_len) :
+	#print site_df
+
+	clusters = []
+	
+	current_cluster = []
+	last_pos = site_df["pos"][site_df.index[0]]
+	last = site_df.ix[site_df.index[0]]
+
+	current_cluster.append(last_pos)
+	
+	i = 0
+	for current in site_df.itertuples() :
+		if i == 0 :
+			i = 1
+			continue
+
+		current_pos = current.pos
+		current_dist = current_pos-last_pos
+		
+		if current_dist <= distance and current_dist > 0 :
+			current_cluster.append(current)
+		else :
+			if len(current_cluster) >= c_len : 
+				clusters.append(current_cluster)
+			
+			current_cluster = []
+			current_cluster.append(current)
+
+		last_pos = current_pos
+		last = current
+
+	return clusters
+
+def quantitive_info (clusters) :
 	num_of_clusters = len(clusters[0])+len(clusters[1])
 	
 	df_clusters = []
@@ -194,37 +236,72 @@ def find_clusters (site_df, distance, c_len) :
 	for strand in clusters :
 		for cl in strand :
 			qty_of_each.append(len(cl))
-			len_of_each.append(cl[-1]-cl[0])
-
-			#df_clusters.append(site_df[site_df["pos"].isin(cl)])
-
-	#print ("Number of clusters -- {0}\n")#Qties -- {1}\nLengths -- {2}\n").format(num_of_clusters, qty_of_each, len_of_each)#, #df_clusters[2])
+			len_of_each.append(cl[-1].pos-cl[0].pos)
 
 	return (num_of_clusters, qty_of_each, len_of_each)
 
-def fill_clusters (site_df, distance, c_len) :
-	#print site_df
-
-	clusters = []
+def get_cluster_quantitive_info (site_df, distance, c_len) :
 	
-	current_cluster = []
-	last_pos = site_df["pos"][site_df.index[0]]
+	clusters = get_clusters(site_df, distance, c_len)
 
-	current_cluster.append(last_pos)
+	return quantitive_info(clusters)
+
+def find_intersecting_clusters (site_df1, site_df2, clusterDistance, clusterLength) :
+	clusters1 = get_clusters(site_df1, clusterDistance, clusterLength)
+	clusters2 = get_clusters(site_df2, clusterDistance, clusterLength)
+
+	number_of_intersections = 0
+
+	filtered_clusters = []
+
+	#  TODO: слишком просто
+	for strand1, strand2 in zip(clusters1, clusters2) :
+		filtered_clusters.append([])
+		for cl1 in strand1 :
+			for cl2 in strand2 :
+				if cl1[0].seqnames == cl2[0].seqnames :
+					val = check_cluster_interection(cl1, cl2, 0)
+					if val[0] == True :
+						number_of_intersections += 1
+						filtered_clusters[-1].append(val[1])
+						break
+
+	print filtered_clusters[0][2]
 	
-	for current_pos in site_df["pos"][site_df.index[1]:] :
-		current_dist = current_pos-last_pos
-		if current_dist <= distance and current_dist > 0 :
-			current_cluster.append(current_pos)
-		else :
-			current_cluster.append(last_pos)
+	print len(clusters1[0]) + len(clusters1[1])
+	print len(clusters2[0]) + len(clusters2[1])
+	
+	print "Number of intersections -- {0}".format(number_of_intersections)
 
-			if len(current_cluster) >= c_len : 
-				clusters.append(current_cluster)
-				
-			current_cluster = []
+
+def check_cluster_interection (cl1, cl2, intersection) :
+	# left bound, right bound
+	lb1 = cl1[0 ].pos
+	rb1 = cl1[-1].pos
+
+	lb2 = cl2[0 ].pos
+	rb2 = cl2[-1].pos
+
+	#Sort
+	if (rb1 >= rb2 and lb1 <= rb2-intersection):
+		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
+		return True, new_cluster
 		
-		last_pos = current_pos
+	if (lb1 <= lb2 and rb1 >= lb2+intersection):
+		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
+		return True, new_cluster
+	
+	if (lb1 >= lb2 and rb1 <= rb2) :
+		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
+		return True, new_cluster
+	else : 
+		return False, []
 
-	return clusters
+
+
+
+
+
+
+
 

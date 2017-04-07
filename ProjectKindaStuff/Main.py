@@ -64,126 +64,104 @@ args = parser.parse_args()
 #  Initialising Dataframes
 #-------------------------------------
 first_site_df  = TsvReader.read_tsv(args.firstFilePath)
-# second_site_df = TsvReader.read_tsv(args.secondFilePath)
+second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
 # if (args.thirdFilePath == None) :
 # 	print ("oh no!")
 # 	sys.exit()
 
-third_site_df = TsvReader.read_tsv(args.thirdFilePath)
-
+#third_site_df = TsvReader.read_tsv(args.thirdFilePath)
 #-------------------------------------
 
 #-------------------------------------
 #  Filtering sites
-#-------------------------------------
-# first_filtered  = TsvFiltering.filter( first_site_df, args.fullCoverage, args.absoluteSubstitution)
-# second_filtered = TsvFiltering.filter(second_site_df, args.fullCoverage, args.absoluteSubstitution)
-# first_filtered  = TsvFiltering.filter_by_relative_substitution( first_site_df, args.relativeSubstitution)
-# second_filtered = TsvFiltering.filter_by_relative_substitution(second_site_df, args.relativeSubstitution)
+	# first_filtered  = TsvFiltering.filter( first_site_df, args.fullCoverage, args.absoluteSubstitution)
+	# second_filtered = TsvFiltering.filter(second_site_df, args.fullCoverage, args.absoluteSubstitution)
+	# first_filtered  = TsvFiltering.filter_by_relative_substitution( first_site_df, args.relativeSubstitution)
+	# second_filtered = TsvFiltering.filter_by_relative_substitution(second_site_df, args.relativeSubstitution)
 
 
 
-# ft.filter_two (first_site_df, second_site_df, "r", args)
-# ft.filter_two (first_site_df,  third_site_df, "g", args)
-# ft.filter_two (second_site_df, third_site_df, "b", args)
+	# ft.filter_two (first_site_df, second_site_df, "r", args)
+	# ft.filter_two (first_site_df,  third_site_df, "g", args)
+	# ft.filter_two (second_site_df, third_site_df, "b", args)
 
-# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
+	# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
 
-# red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
-# green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
-# blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
-# magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
+	# red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
+	# green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
+	# blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
+	# magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
 
-# plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
+	# plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
 
-# plt.show()
-
+	# plt.show()
 #-------------------------------------
 
-
 #-------------------------------------
-#  Finding clusters
-#-------------------------------------
+#  Cluster Filtering
+	# cluster_params = []
+	# cluster_lengths = []
 
+	# for cluster_length in tqdm(range (5,100,5)) :
+	# 	cluster_params.append(cluster_length)
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, 500, cluster_length)[0])
 
-#------------------------
-# cluster_params = []
-# cluster_lengths = []
+	# plt.plot (cluster_params, cluster_lengths, color='m')
+	# plt.xlabel('min #\n(max site distance - 500)') 
+	# plt.ylabel('number of clusters')
 
-# for cluster_length in tqdm(range (5,100,5)) :
-# 	cluster_params.append(cluster_length)
-# 	cluster_lengths.append(ft.find_clusters (first_site_df, 500, cluster_length)[0])
+	# cluster_params = []
+	# cluster_lengths = []
 
-# plt.plot (cluster_params, cluster_lengths, color='m')
-# plt.xlabel('min #\n(max site distance - 500)') 
-# plt.ylabel('number of clusters')
+	# for cluster_length in tqdm(range (5,100,5)) :
+	# 	cluster_params.append(cluster_length)
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, 900, cluster_length)[0])
 
+	#plt.plot (cluster_params, cluster_lengths, color='b')
+	#------------------------
 
-# cluster_params = []
-# cluster_lengths = []
+	#------------------------
+	# cluster_params = []
+	# cluster_lengths = []
 
-# for cluster_length in tqdm(range (5,100,5)) :
-# 	cluster_params.append(cluster_length)
-# 	cluster_lengths.append(ft.find_clusters (first_site_df, 900, cluster_length)[0])
+	# for distance in tqdm(range (300,1500,100)) :
+	# 	cluster_params.append(distance)
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, distance, 5)[0])
 
-#plt.plot (cluster_params, cluster_lengths, color='b')
-#------------------------
+	# plt.plot (cluster_params, cluster_lengths, color='b')
+	# plt.xlabel('max site distance\n(min # - 5)') 
+	# plt.ylabel('number of clusters')
+	#------------------------
 
+	#------------------------
+	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
 
-#------------------------
-# cluster_params = []
-# cluster_lengths = []
+	# plt.hist(data[2], 150)
+	# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
+	# plt.ylabel('number of clusters')
+	#------------------------
 
-# for distance in tqdm(range (300,1500,100)) :
-# 	cluster_params.append(distance)
-# 	cluster_lengths.append(ft.find_clusters (first_site_df, distance, 5)[0])
+	#------------------------
+	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
 
-# plt.plot (cluster_params, cluster_lengths, color='b')
-# plt.xlabel('max site distance\n(min # - 5)') 
-# plt.ylabel('number of clusters')
-#------------------------
+	# plt.hist(data[1], 150)
+	# plt.xlabel('number of sites\n(min len - 10, max dist - 500)') 
+	# plt.ylabel('number of clusters')
+	# #------------------------
 
+	#------------------------
+	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
 
-
-#------------------------
-# data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
-
-# plt.hist(data[2], 150)
-# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
-# plt.ylabel('number of clusters')
-#------------------------
-
-#------------------------
-# data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
-
-# plt.hist(data[1], 150)
-# plt.xlabel('number of sites\n(min len - 10, max dist - 500)') 
-# plt.ylabel('number of clusters')
-#------------------------
-
-#------------------------
-data = ft.find_clusters (first_site_df, args.clusterDistance, args.clusterLength)
-
-plt.plot(data[2], data[1], '.')
-plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
-plt.ylabel('number of sites')
-#------------------------
-
-
-
+	# plt.plot(data[2], data[1], '.')
+	# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
+	# plt.ylabel('number of sites')
+	#------------------------
 plt.show()
-
-
-# with open("result.lol", 'w') as f :
-# 	# for length in data[2] :
-# 	# 	f.write(length)
-# 	sys.stdout = f 
-# 	for length in data[2] :
-# 		print length
-
-
 #-------------------------------------
+
+ft.find_intersecting_clusters (first_site_df, second_site_df, args.clusterDistance, args.clusterLength) 
+
 
 #-------------------------------------
 #  Finding common
