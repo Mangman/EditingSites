@@ -264,7 +264,7 @@ def find_common (clusters1, clusters2) :
 			for cl2 in strand2 :
 				
 				if cl1[0].seqnames == cl2[0].seqnames :
-					val = check_cluster_interection(cl1, cl2, 0)
+					val = check_cluster_intersection(cl1, cl2, 0)
 					
 					# val = [Bool, merged_cluster]
 					if val[0] == True :
@@ -276,6 +276,8 @@ def find_common (clusters1, clusters2) :
 
 def find_common_with_graph (clusters1, clusters2, graph, name1, name2) :
 	#  TODO: слишком просто
+	number_of_intersections = 0
+
 	for strand1, strand2, graph in zip(clusters1, clusters2, graph) :
 		cl1_pos = 0
 	
@@ -286,29 +288,29 @@ def find_common_with_graph (clusters1, clusters2, graph, name1, name2) :
 
 			for cl2 in iter_strand2 :
 				if cl1[0].seqnames == cl2[0].seqnames :
-					val = check_cluster_interection(cl1, cl2, 0)
+					val = check_cluster_intersection(cl1, cl2, 0)
 					# val = [Bool, merged_cluster]
 					if val[0] == True :
+						number_of_intersections += 1
 						graph.add_edge (name1+"{}".format(cl1_pos), name2+"{}".format(cl2_pos))
-						find_consecutive(cl1, iter_strand2, cl1_pos, cl2_pos, graph, name1, name2)
+						number_of_intersections += find_consecutive(cl1, iter_strand2, cl1_pos, cl2_pos, graph, name1, name2, 0)
 						break
 				cl2_pos += 1
 			cl1_pos += 1
+	return number_of_intersections
 
-def find_consecutive (cl, iter_strand, cl1_pos, cl2_pos, graph, name1, name2) :
-	
+def find_consecutive (cl, iter_strand, cl1_pos, cl2_pos, graph, name1, name2, intersections) :
 	try :
 		next_cl = next(iter_strand) 
 		if cl[0].seqnames == next_cl[0].seqnames :
-			val = check_cluster_interection(cl, next_cl, 0)
+			val = check_cluster_intersection(cl, next_cl, 0)
 			if val[0] == True :
+				intersections += 1
 				graph.add_edge (name1+"{}".format(cl1_pos), name2+"{}".format(cl2_pos+1))
 				find_consecutive(cl, iter_strand, cl1_pos, cl2_pos+1, graph, name1, name2)
+		return intersections
 	except :
-		pass							
-
-
-
+		return intersections							
 
 def find_intersecting_clusters_between_three (site_df1, site_df2, site_df3, clusterDistance, clusterLength, 
 								absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold) :
@@ -321,10 +323,17 @@ def find_intersecting_clusters_between_three (site_df1, site_df2, site_df3, clus
 	clusters1 = get_clusters(filtered1, clusterDistance, clusterLength)
 	clusters2 = get_clusters(filtered2, clusterDistance, clusterLength)
 	clusters3 = get_clusters(filtered3, clusterDistance, clusterLength)
+
+	print ("First clusters -- {0}\nSecond clusters -- {1}\nThird clusters -- {2}").format(
+															len(clusters1[0])+len(clusters1[1]),
+															len(clusters2[0])+len(clusters2[1]),
+															len(clusters3[0])+len(clusters3[1]))
 	
-	find_common_with_graph(clusters1, clusters2, graph, "a", "b")
-	find_common_with_graph(clusters2, clusters3, graph, "b", "c")
-	find_common_with_graph(clusters1, clusters3, graph, "a", "c")
+	ab_len = find_common_with_graph(clusters1, clusters2, graph, "a", "b")
+	bc_len = find_common_with_graph(clusters2, clusters3, graph, "b", "c")
+	ac_len = find_common_with_graph(clusters1, clusters3, graph, "a", "c")
+
+	print ("ab -- {0}\nbc -- {1}\nac -- {2}".format(ab_len, bc_len, ac_len))
 
 	searcher = Searcher()
 
@@ -332,12 +341,10 @@ def find_intersecting_clusters_between_three (site_df1, site_df2, site_df3, clus
 
 	searcher.calculateClusters(graph[1], "res2.txt")
 
-	print graph[0].edges
+	#print graph[0].edges
 	#print graph[1].edges
 
-
-
-def check_cluster_interection (cl1, cl2, intersection) :
+def check_cluster_intersection (cl1, cl2, intersection) :
 	# left bound, right bound
 	lb1 = cl1[0 ].pos
 	rb1 = cl1[-1].pos
@@ -357,3 +364,39 @@ def check_cluster_interection (cl1, cl2, intersection) :
 		return True, new_cluster
 	else : 
 		return False, []
+
+def check_reproducibility (site_df1, site_df2, site_df3, clusterDistance, clusterLength, 
+								absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold) :
+	
+	filtered1 = filter_df (site_df1, absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold)
+	filtered2 = filter_df (site_df2, absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold)
+	filtered3 = filter_df (site_df3, absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold)
+	
+	clusters1 = get_clusters(filtered1, clusterDistance, clusterLength)
+	clusters2 = get_clusters(filtered2, clusterDistance, clusterLength)
+	clusters3 = get_clusters(filtered3, clusterDistance, clusterLength)
+
+	common_clusters = []
+	with open("clusters.txt") as f:
+		common_clusters = eval(f.readlines()[0])
+	
+	for strand1, strand2, strand3, common_clusters in zip(clusters1, clusters2, clusters3, common_clusters) :
+		for cl in common_clusters :
+			sites1 = []
+			sites2 = []
+			sites3 = []	
+
+			for little_cl in cl :
+				if little_cl[0] == 'a' :
+					sites1 = get_sites(strand1, int(little_cl[1:]))
+				if little_cl[0] == 'b' :
+					sites2 = get_sites(strand2, int(little_cl[1:]))
+				if little_cl[0] == 'c' :
+					sites3 = get_sites(strand3, int(little_cl[1:]))	
+
+			print "Whole sites -- {0} Common sites -- {1}".format(len(sites1)+len(sites2)+len(sites3),
+																	len(set(sites1+sites2+sites3)))			
+
+def get_sites(clusters, cluster_num) :
+	return map(lambda x: x.pos ,clusters[cluster_num])
+

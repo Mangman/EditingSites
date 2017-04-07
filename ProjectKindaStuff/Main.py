@@ -213,10 +213,11 @@ plt.show()
 # ft.find_intersecting_clusters_between_two (first_site_df, second_site_df, args.clusterDistance, args.clusterLength,
 # 							   								  args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
 
-ft.find_intersecting_clusters_between_three (first_site_df, second_site_df, third_site_df, args.clusterDistance, args.clusterLength,
-							                 args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
+# ft.find_intersecting_clusters_between_three (first_site_df, second_site_df, third_site_df, args.clusterDistance, args.clusterLength,
+# 							                 args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
 
-
+ft.check_reproducibility (first_site_df, second_site_df, third_site_df, args.clusterDistance, args.clusterLength,
+											 args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
 #-------------------------------------
 #  Finding common
 #-------------------------------------
