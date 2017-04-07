@@ -1,0 +1,1104 @@
+c150	b149	a181	
+Previous cluster (3)^
+
+a264	c220	
+Previous cluster (2)^
+
+c33	b31	a36	
+Previous cluster (3)^
+
+c8	a11	
+Previous cluster (2)^
+
+c169	b174	a212	
+Previous cluster (3)^
+
+a260	b218	c214	
+Previous cluster (3)^
+
+b311	a373	c326	
+Previous cluster (3)^
+
+b310	a372	
+Previous cluster (2)^
+
+a261	b219	c216	
+Previous cluster (3)^
+
+b312	a377	c327	
+Previous cluster (3)^
+
+b315	a382	c334	
+Previous cluster (3)^
+
+b314	a380	c330	
+Previous cluster (3)^
+
+a8	b5	c5	
+Previous cluster (3)^
+
+a9	b6	c6	
+Previous cluster (3)^
+
+a6	b3	c3	b4	c4	
+Previous cluster (5)^
+
+b318	a386	c337	
+Previous cluster (3)^
+
+a4	c2	
+Previous cluster (2)^
+
+a5	b2	
+Previous cluster (2)^
+
+a2	b0	
+Previous cluster (2)^
+
+a3	b1	c1	
+Previous cluster (3)^
+
+a18	b15	c19	
+Previous cluster (3)^
+
+a19	c20	
+Previous cluster (2)^
+
+a12	b7	c9	
+Previous cluster (3)^
+
+a13	b8	c11	
+Previous cluster (3)^
+
+a16	b13	c16	
+Previous cluster (3)^
+
+a17	b14	c18	
+Previous cluster (3)^
+
+a14	b10	c13	
+Previous cluster (3)^
+
+a15	b12	c15	
+Previous cluster (3)^
+
+b19	a23	c23	
+Previous cluster (3)^
+
+b18	a22	c22	
+Previous cluster (3)^
+
+c345	b323	a393	
+Previous cluster (3)^
+
+c54	b53	
+Previous cluster (2)^
+
+b11	c14	
+Previous cluster (2)^
+
+b17	a21	c21	
+Previous cluster (3)^
+
+b9	c12	
+Previous cluster (2)^
+
+a269	b225	c225	
+Previous cluster (3)^
+
+b179	a218	c177	
+Previous cluster (3)^
+
+b178	a217	
+Previous cluster (2)^
+
+c218	b220	a263	
+Previous cluster (3)^
+
+b175	a213	c170	
+Previous cluster (3)^
+
+b177	c176	
+Previous cluster (2)^
+
+b176	a215	c172	
+Previous cluster (3)^
+
+b171	a208	c166	
+Previous cluster (3)^
+
+b170	a207	c165	
+Previous cluster (3)^
+
+b173	a211	c167	c168	
+Previous cluster (4)^
+
+b172	a210	
+Previous cluster (2)^
+
+c254	b249	a297	
+Previous cluster (3)^
+
+c253	b247	a295	
+Previous cluster (3)^
+
+c252	b246	a294	
+Previous cluster (3)^
+
+c259	b252	a301	
+Previous cluster (3)^
+
+c258	b251	a300	
+Previous cluster (3)^
+
+b69	a88	c71	
+Previous cluster (3)^
+
+b64	a83	c66	
+Previous cluster (3)^
+
+b65	a85	b66	c68	
+Previous cluster (4)^
+
+b67	a86	c69	
+Previous cluster (3)^
+
+b60	a77	c63	
+Previous cluster (3)^
+
+b61	a78	c64	
+Previous cluster (3)^
+
+b62	a79	
+Previous cluster (2)^
+
+b63	a80	c65	
+Previous cluster (3)^
+
+a202	b166	c161	
+Previous cluster (3)^
+
+a200	b162	b163	c160	
+Previous cluster (4)^
+
+a201	b165	
+Previous cluster (2)^
+
+a206	b169	c164	
+Previous cluster (3)^
+
+a204	b167	c163	
+Previous cluster (3)^
+
+a205	b168	
+Previous cluster (2)^
+
+a163	b138	c132	
+Previous cluster (3)^
+
+a162	b137	c131	
+Previous cluster (3)^
+
+a160	b136	c129	
+Previous cluster (3)^
+
+a167	b141	c137	
+Previous cluster (3)^
+
+a166	b140	c136	
+Previous cluster (3)^
+
+a165	b139	c135	
+Previous cluster (3)^
+
+a164	c134	
+Previous cluster (2)^
+
+a369	b309	c324	
+Previous cluster (3)^
+
+b87	a106	
+Previous cluster (2)^
+
+a415	b345	c367	
+Previous cluster (3)^
+
+b85	a105	c86	
+Previous cluster (3)^
+
+b82	a102	c83	
+Previous cluster (3)^
+
+b83	a103	c84	
+Previous cluster (3)^
+
+b80	a99	
+Previous cluster (2)^
+
+b81	a100	c82	a101	
+Previous cluster (4)^
+
+a361	b301	c316	
+Previous cluster (3)^
+
+a360	b300	c315	
+Previous cluster (3)^
+
+a363	b302	c317	
+Previous cluster (3)^
+
+a350	b293	c306	
+Previous cluster (3)^
+
+a364	b303	c318	
+Previous cluster (3)^
+
+b88	a107	c87	
+Previous cluster (3)^
+
+b89	a109	c88	
+Previous cluster (3)^
+
+c30	b28	a31	
+Previous cluster (3)^
+
+a351	b294	c307	
+Previous cluster (3)^
+
+c138	b142	a170	
+Previous cluster (3)^
+
+c139	b143	a171	
+Previous cluster (3)^
+
+c130	a161	
+Previous cluster (2)^
+
+c90	b93	a114	
+Previous cluster (3)^
+
+a358	b299	c312	
+Previous cluster (3)^
+
+c293	b287	a339	
+Previous cluster (3)^
+
+a291	c247	
+Previous cluster (2)^
+
+a290	b242	c244	
+Previous cluster (3)^
+
+a118	b97	c94	
+Previous cluster (3)^
+
+a292	b245	c249	
+Previous cluster (3)^
+
+a116	b95	c93	
+Previous cluster (3)^
+
+a117	b96	
+Previous cluster (2)^
+
+a115	b94	c92	
+Previous cluster (3)^
+
+a112	b91	
+Previous cluster (2)^
+
+a113	b92	
+Previous cluster (2)^
+
+a110	b90	
+Previous cluster (2)^
+
+c57	b57	a66	
+Previous cluster (3)^
+
+c62	a76	
+Previous cluster (2)^
+
+b317	a385	c336	
+Previous cluster (3)^
+
+b316	a384	c335	
+Previous cluster (3)^
+
+b319	a387	c339	
+Previous cluster (3)^
+
+c329	a379	
+Previous cluster (2)^
+
+c328	b313	a378	
+Previous cluster (3)^
+
+c325	a370	
+Previous cluster (2)^
+
+c323	b307	a368	
+Previous cluster (3)^
+
+c322	b306	a367	
+Previous cluster (3)^
+
+c321	b305	a366	c320	
+Previous cluster (4)^
+
+a404	b334	c359	b335	
+Previous cluster (4)^
+
+b355	a429	b354	
+Previous cluster (3)^
+
+b357	a431	c381	
+Previous cluster (3)^
+
+b356	a430	c380	
+Previous cluster (3)^
+
+b351	a425	c376	
+Previous cluster (3)^
+
+b350	a422	c372	
+Previous cluster (3)^
+
+b353	a428	c379	
+Previous cluster (3)^
+
+b352	a427	c377	
+Previous cluster (3)^
+
+b359	c385	
+Previous cluster (2)^
+
+b358	c384	
+Previous cluster (2)^
+
+c55	b54	a63	
+Previous cluster (3)^
+
+a180	b148	c149	
+Previous cluster (3)^
+
+a183	b150	c151	
+Previous cluster (3)^
+
+a185	b152	
+Previous cluster (2)^
+
+a184	b151	c152	
+Previous cluster (3)^
+
+a186	b153	
+Previous cluster (2)^
+
+a189	b155	c156	
+Previous cluster (3)^
+
+a188	b154	c155	
+Previous cluster (3)^
+
+b216	a255	c208	
+Previous cluster (3)^
+
+b217	a257	c209	
+Previous cluster (3)^
+
+b211	a248	c202	
+Previous cluster (3)^
+
+b212	a249	c203	
+Previous cluster (3)^
+
+b213	a251	c204	
+Previous cluster (3)^
+
+c116	b121	a144	
+Previous cluster (3)^
+
+c58	a68	
+Previous cluster (2)^
+
+c159	b160	a197	
+Previous cluster (3)^
+
+b221	a265	c221	
+Previous cluster (3)^
+
+b223	a266	c223	
+Previous cluster (3)^
+
+c189	b193	a234	
+Previous cluster (3)^
+
+c188	b192	a232	
+Previous cluster (3)^
+
+b349	a421	c371	
+Previous cluster (3)^
+
+c183	b188	a227	
+Previous cluster (3)^
+
+c182	b186	a225	
+Previous cluster (3)^
+
+c180	b184	a223	
+Previous cluster (3)^
+
+c186	b189	a229	
+Previous cluster (3)^
+
+c184	a228	
+Previous cluster (2)^
+
+b224	a267	c224	
+Previous cluster (3)^
+
+a62	b52	c53	
+Previous cluster (3)^
+
+a61	b51	c52	
+Previous cluster (3)^
+
+a60	b50	c51	
+Previous cluster (3)^
+
+b342	a411	c364	
+Previous cluster (3)^
+
+a65	b56	
+Previous cluster (2)^
+
+a64	b55	c56	
+Previous cluster (3)^
+
+b343	a413	b344	a414	c366	
+Previous cluster (5)^
+
+a329	b277	c283	
+Previous cluster (3)^
+
+a327	b275	c282	
+Previous cluster (3)^
+
+a326	b274	c281	
+Previous cluster (3)^
+
+a321	b271	c279	
+Previous cluster (3)^
+
+a320	b270	c278	
+Previous cluster (3)^
+
+a323	b273	
+Previous cluster (2)^
+
+a322	b272	c280	
+Previous cluster (3)^
+
+b104	a124	b105	c100	c99	
+Previous cluster (5)^
+
+b106	a125	c102	
+Previous cluster (3)^
+
+b107	a128	
+Previous cluster (2)^
+
+b100	a120	c95	
+Previous cluster (3)^
+
+b101	a122	c96	
+Previous cluster (3)^
+
+b103	a123	c98	
+Previous cluster (3)^
+
+b108	a129	c104	
+Previous cluster (3)^
+
+b109	a130	c105	
+Previous cluster (3)^
+
+c285	a331	
+Previous cluster (2)^
+
+c266	b260	a307	
+Previous cluster (3)^
+
+c267	b261	a309	
+Previous cluster (3)^
+
+c264	b258	a306	
+Previous cluster (3)^
+
+b59	a75	c60	
+Previous cluster (3)^
+
+b58	a71	c59	
+Previous cluster (3)^
+
+c260	b254	a303	
+Previous cluster (3)^
+
+a153	b128	c125	
+Previous cluster (3)^
+
+a150	b127	c123	
+Previous cluster (3)^
+
+a156	b131	
+Previous cluster (2)^
+
+a154	b129	
+Previous cluster (2)^
+
+a155	b130	c126	
+Previous cluster (3)^
+
+a158	b132	
+Previous cluster (2)^
+
+a159	b134	c128	
+Previous cluster (3)^
+
+a390	b321	c343	
+Previous cluster (3)^
+
+a258	c210	
+Previous cluster (2)^
+
+a392	b322	c344	
+Previous cluster (3)^
+
+a394	b324	c346	
+Previous cluster (3)^
+
+a396	b326	c349	
+Previous cluster (3)^
+
+a399	b328	c352	
+Previous cluster (3)^
+
+a252	b214	c205	
+Previous cluster (3)^
+
+a254	b215	c206	
+Previous cluster (3)^
+
+c363	a410	
+Previous cluster (2)^
+
+a191	c157	
+Previous cluster (2)^
+
+c361	b337	a405	
+Previous cluster (3)^
+
+c360	b336	
+Previous cluster (2)^
+
+c77	b74	
+Previous cluster (2)^
+
+a423	c373	
+Previous cluster (2)^
+
+a420	b348	c370	
+Previous cluster (3)^
+
+c74	b71	a90	
+Previous cluster (3)^
+
+b199	a239	b200	c194	b201	c193	
+Previous cluster (6)^
+
+b198	a238	
+Previous cluster (2)^
+
+b197	a237	c192	
+Previous cluster (3)^
+
+b196	a236	c191	
+Previous cluster (3)^
+
+b195	a235	
+Previous cluster (2)^
+
+b191	a231	c187	
+Previous cluster (3)^
+
+b190	a230	
+Previous cluster (2)^
+
+c73	b70	a89	
+Previous cluster (3)^
+
+b244	c248	
+Previous cluster (2)^
+
+b250	a299	
+Previous cluster (2)^
+
+b253	a302	
+Previous cluster (2)^
+
+b255	a304	c262	
+Previous cluster (3)^
+
+b256	a305	c263	
+Previous cluster (3)^
+
+c310	b297	a356	
+Previous cluster (3)^
+
+c311	b298	
+Previous cluster (2)^
+
+c319	b304	a365	
+Previous cluster (3)^
+
+c268	b262	a310	
+Previous cluster (3)^
+
+c269	b263	
+Previous cluster (2)^
+
+b329	c353	
+Previous cluster (2)^
+
+c265	b259	
+Previous cluster (2)^
+
+b325	a395	c347	
+Previous cluster (3)^
+
+b327	a398	c351	
+Previous cluster (3)^
+
+b320	a389	c342	
+Previous cluster (3)^
+
+a29	b27	
+Previous cluster (2)^
+
+a28	c29	
+Previous cluster (2)^
+
+a27	b25	
+Previous cluster (2)^
+
+a26	b24	c26	
+Previous cluster (3)^
+
+a25	b21	c25	
+Previous cluster (3)^
+
+a24	b20	c24	
+Previous cluster (3)^
+
+a152	c124	
+Previous cluster (2)^
+
+b144	c140	a172	
+Previous cluster (3)^
+
+b145	a174	c143	
+Previous cluster (3)^
+
+b146	a176	c145	
+Previous cluster (3)^
+
+b147	a179	c148	
+Previous cluster (3)^
+
+a419	b347	c368	
+Previous cluster (3)^
+
+c226	b226	
+Previous cluster (2)^
+
+c228	b228	a274	
+Previous cluster (3)^
+
+c229	b229	a275	
+Previous cluster (3)^
+
+a104	c85	
+Previous cluster (2)^
+
+c287	b279	a333	
+Previous cluster (3)^
+
+a418	b346	
+Previous cluster (2)^
+
+a355	b296	c309	
+Previous cluster (3)^
+
+a219	b180	
+Previous cluster (2)^
+
+a353	b295	c308	
+Previous cluster (3)^
+
+a214	c171	
+Previous cluster (2)^
+
+a216	c174	
+Previous cluster (2)^
+
+c31	b29	a32	
+Previous cluster (3)^
+
+c127	b133	
+Previous cluster (2)^
+
+a259	c212	
+Previous cluster (2)^
+
+c120	a146	
+Previous cluster (2)^
+
+c122	b124	a148	
+Previous cluster (3)^
+
+c36	b33	a38	
+Previous cluster (3)^
+
+b290	a343	c298	
+Previous cluster (3)^
+
+b292	a347	c303	
+Previous cluster (3)^
+
+b222	c222	
+Previous cluster (2)^
+
+c358	b333	a403	
+Previous cluster (3)^
+
+c356	b332	a401	
+Previous cluster (3)^
+
+c357	a402	
+Previous cluster (2)^
+
+c354	b330	a400	b331	c355	
+Previous cluster (5)^
+
+c362	a409	
+Previous cluster (2)^
+
+b360	a437	b361	c386	
+Previous cluster (4)^
+
+b362	c387	
+Previous cluster (2)^
+
+b363	a438	c388	
+Previous cluster (3)^
+
+b364	a439	c389	a440	
+Previous cluster (4)^
+
+b209	a247	c200	c201	
+Previous cluster (4)^
+
+b208	a246	c199	
+Previous cluster (3)^
+
+b207	a245	
+Previous cluster (2)^
+
+b204	a244	c196	
+Previous cluster (3)^
+
+b203	a241	c195	
+Previous cluster (3)^
+
+b202	a240	
+Previous cluster (2)^
+
+c271	b264	a312	
+Previous cluster (3)^
+
+c80	b78	a96	
+Previous cluster (3)^
+
+c217	a262	
+Previous cluster (2)^
+
+c35	b32	a37	
+Previous cluster (3)^
+
+a330	c284	
+Previous cluster (2)^
+
+a338	b286	c292	
+Previous cluster (3)^
+
+a318	b269	c276	
+Previous cluster (3)^
+
+a319	c277	
+Previous cluster (2)^
+
+a313	b265	c272	
+Previous cluster (3)^
+
+a314	b266	c273	
+Previous cluster (3)^
+
+a315	b267	c274	
+Previous cluster (3)^
+
+a317	b268	c275	
+Previous cluster (3)^
+
+b117	a137	b116	c111	c112	
+Previous cluster (5)^
+
+b115	a136	c110	
+Previous cluster (3)^
+
+b114	a135	c109	
+Previous cluster (3)^
+
+b113	a134	
+Previous cluster (2)^
+
+b112	a133	c108	
+Previous cluster (3)^
+
+b111	a132	c107	
+Previous cluster (3)^
+
+b110	a131	c106	
+Previous cluster (3)^
+
+b119	a139	
+Previous cluster (2)^
+
+b118	a138	c113	
+Previous cluster (3)^
+
+b194	c190	
+Previous cluster (2)^
+
+b339	a407	
+Previous cluster (2)^
+
+b338	a406	
+Previous cluster (2)^
+
+b48	a57	c50	
+Previous cluster (3)^
+
+b49	a59	
+Previous cluster (2)^
+
+b42	a49	c44	
+Previous cluster (3)^
+
+b43	a50	c46	
+Previous cluster (3)^
+
+b40	a47	
+Previous cluster (2)^
+
+b41	a48	c43	
+Previous cluster (3)^
+
+b46	a55	
+Previous cluster (2)^
+
+b47	a56	c49	
+Previous cluster (3)^
+
+b44	a52	c47	
+Previous cluster (3)^
+
+b45	a53	c48	
+Previous cluster (3)^
+
+a149	b125	
+Previous cluster (2)^
+
+a145	b122	c117	
+Previous cluster (3)^
+
+a141	c115	
+Previous cluster (2)^
+
+a140	b120	c114	
+Previous cluster (3)^
+
+a381	c333	
+Previous cluster (2)^
+
+a388	c341	
+Previous cluster (2)^
+
+a435	c382	
+Previous cluster (2)^
+
+c103	a126	
+Previous cluster (2)^
+
+c76	b73	
+Previous cluster (2)^
+
+b241	a289	c243	
+Previous cluster (3)^
+
+b240	a288	
+Previous cluster (2)^
+
+c78	b75	a93	
+Previous cluster (3)^
+
+c79	b77	a95	
+Previous cluster (3)^
+
+c181	b185	a224	
+Previous cluster (3)^
+
+c305	a349	
+Previous cluster (2)^
+
+c304	a348	
+Previous cluster (2)^
+
+a41	b35	
+Previous cluster (2)^
+
+a43	b36	c41	
+Previous cluster (3)^
+
+a42	c40	
+Previous cluster (2)^
+
+a45	b38	
+Previous cluster (2)^
+
+a44	b37	
+Previous cluster (2)^
+
+a46	b39	c42	
+Previous cluster (3)^
+
+b236	a284	c239	
+Previous cluster (3)^
+
+b237	a285	c240	
+Previous cluster (3)^
+
+b234	c236	
+Previous cluster (2)^
+
+b235	a283	c238	
+Previous cluster (3)^
+
+b232	a279	
+Previous cluster (2)^
+
+b230	a277	c231	
+Previous cluster (3)^
+
+b231	a278	c233	
+Previous cluster (3)^
+
+b238	a286	c242	
+Previous cluster (3)^
+
+b239	a287	
+Previous cluster (2)^
+
+c291	b285	a337	
+Previous cluster (3)^
+
+a39	b34	c39	
+Previous cluster (3)^
+
+a35	b30	
+Previous cluster (2)^
+
+c296	a342	
+Previous cluster (2)^
+
+c294	b288	a340	
+Previous cluster (3)^
+
+b159	a196	
+Previous cluster (2)^
+
+b158	a195	
+Previous cluster (2)^
+
+b157	a193	
+Previous cluster (2)^
+
+b156	a192	c158	
+Previous cluster (3)^
+
+c234	a280	
+Previous cluster (2)^
+
+a341	b289	c295	
+Previous cluster (3)^
+
+a220	b181	c178	
+Previous cluster (3)^
+
+a221	b183	c179	
+Previous cluster (3)^
+
+a226	b187	
+Previous cluster (2)^
+
+a346	c301	
+Previous cluster (2)^
+
+c289	b282	a335	
+Previous cluster (3)^
+
+a178	c147	
+Previous cluster (2)^
+
+b278	a332	c286	
+Previous cluster (3)^
+
+a97	b79	c81	
+Previous cluster (3)^
+
+b161	a198	
+Previous cluster (2)^
+
+a408	b341	
+Previous cluster (2)^
+
+b72	c75	
+Previous cluster (2)^
+
+a273	b227	c227	
+Previous cluster (3)^
+
+a173	c141	
+Previous cluster (2)^
+
+b284	a336	b283	c290	
+Previous cluster (4)^
+
+b205	c197	
+Previous cluster (2)^
+
+a334	b280	
+Previous cluster (2)^
+
+c288	b281	
+Previous cluster (2)^
+

@@ -66,37 +66,87 @@ args = parser.parse_args()
 first_site_df  = TsvReader.read_tsv(args.firstFilePath)
 second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
-# if (args.thirdFilePath == None) :
-# 	print ("oh no!")
-# 	sys.exit()
+if (args.thirdFilePath == None) :
+	print ("oh no!")
+	sys.exit()
 
-#third_site_df = TsvReader.read_tsv(args.thirdFilePath)
+third_site_df = TsvReader.read_tsv(args.thirdFilePath)
 #-------------------------------------
 
 #-------------------------------------
 #  Filtering sites
-	# first_filtered  = TsvFiltering.filter( first_site_df, args.fullCoverage, args.absoluteSubstitution)
-	# second_filtered = TsvFiltering.filter(second_site_df, args.fullCoverage, args.absoluteSubstitution)
-	# first_filtered  = TsvFiltering.filter_by_relative_substitution( first_site_df, args.relativeSubstitution)
-	# second_filtered = TsvFiltering.filter_by_relative_substitution(second_site_df, args.relativeSubstitution)
+
+# ft.filter_two (first_site_df, second_site_df, "r", args)
+# ft.filter_two (first_site_df,  third_site_df, "g", args)
+# ft.filter_two (second_site_df, third_site_df, "b", args)
+
+# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
+
+# red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
+# green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
+# blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
+# magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
+
+# plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
+
+# plt.xlabel('filtering stages') 
+# plt.ylabel('number of clusters')
+
+# plt.show()
+
+#----------------------------------------
+# ft.filter_two (first_site_df, second_site_df, "r", args)
+
+# red_patch = mpatches.Patch(color='red', label="THYP2-THYP3")
+
+# plt.legend(handles=[red_patch])
+
+# plt.xlabel('filtering stages') 
+# plt.ylabel('number of clusters')
+
+# plt.show()
+#----------------------------------------
+# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
 
 
+# red_patch = mpatches.Patch(color='red', label="TNOR1")
+# green_patch = mpatches.Patch(color='green', label="TNOR2")
+# blue_patch = mpatches.Patch(color='blue', label="TNOR3")
 
-	# ft.filter_two (first_site_df, second_site_df, "r", args)
-	# ft.filter_two (first_site_df,  third_site_df, "g", args)
-	# ft.filter_two (second_site_df, third_site_df, "b", args)
+# plt.legend(handles=[red_patch, green_patch, blue_patch])
 
-	# ft.filter_three (first_site_df, second_site_df, third_site_df, "m", args)
+# plt.xlabel('filtering stages') 
+# plt.ylabel('number of clusters')
 
-	# red_patch = mpatches.Patch(color='red', label="TNOR1-TNOR2")
-	# green_patch = mpatches.Patch(color='green', label="TNOR1-TNOR3")
-	# blue_patch = mpatches.Patch(color='blue', label="TNOR2-TNOR3")
-	# magenta_patch = mpatches.Patch(color='magenta', label="TNOR1-TNOR2-TNOR3")
+# plt.show()
 
-	# plt.legend(handles=[red_patch, green_patch, blue_patch, magenta_patch])
-
-	# plt.show()
 #-------------------------------------
+
+# ft.filter_two (first_site_df, second_site_df, "m", args)
+
+# red_patch = mpatches.Patch(color='red', label="THYP2")
+# green_patch = mpatches.Patch(color='green', label="THYP3")
+
+# plt.legend(handles=[red_patch, green_patch])
+
+# plt.xlabel('filtering stages') 
+# plt.ylabel('number of clusters')
+
+# plt.show()
+
+
+#-------------------------------------
+
+
+#-------------------------------------
+
+# filtered_first = ft.filter_df(first_site_df, args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution)
+# filtered_second= ft.filter_df(second_site_df, args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution)
+# filtered_third = ft.filter_df(third_site_df, args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution)
+
+#-------------------------------------
+
+
 
 #-------------------------------------
 #  Cluster Filtering
@@ -105,7 +155,7 @@ second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
 	# for cluster_length in tqdm(range (5,100,5)) :
 	# 	cluster_params.append(cluster_length)
-	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, 500, cluster_length)[0])
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (filtered_first, 500, cluster_length)[0])
 
 	# plt.plot (cluster_params, cluster_lengths, color='m')
 	# plt.xlabel('min #\n(max site distance - 500)') 
@@ -116,9 +166,9 @@ second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
 	# for cluster_length in tqdm(range (5,100,5)) :
 	# 	cluster_params.append(cluster_length)
-	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, 900, cluster_length)[0])
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (filtered_first, 900, cluster_length)[0])
 
-	#plt.plot (cluster_params, cluster_lengths, color='b')
+	# plt.plot (cluster_params, cluster_lengths, color='b')
 	#------------------------
 
 	#------------------------
@@ -127,15 +177,15 @@ second_site_df = TsvReader.read_tsv(args.secondFilePath)
 
 	# for distance in tqdm(range (300,1500,100)) :
 	# 	cluster_params.append(distance)
-	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (first_site_df, distance, 5)[0])
+	# 	cluster_lengths.append(ft.get_cluster_quantitive_info  (filtered_first, distance, 5)[0])
 
 	# plt.plot (cluster_params, cluster_lengths, color='b')
 	# plt.xlabel('max site distance\n(min # - 5)') 
 	# plt.ylabel('number of clusters')
-	#------------------------
+	# #------------------------
 
 	#------------------------
-	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
+	# data = ft.get_cluster_quantitive_info  (filtered_first, args.clusterDistance, args.clusterLength)
 
 	# plt.hist(data[2], 150)
 	# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
@@ -143,15 +193,15 @@ second_site_df = TsvReader.read_tsv(args.secondFilePath)
 	#------------------------
 
 	#------------------------
-	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
+	# data = ft.get_cluster_quantitive_info  (filtered_first, args.clusterDistance, args.clusterLength)
 
 	# plt.hist(data[1], 150)
 	# plt.xlabel('number of sites\n(min len - 10, max dist - 500)') 
 	# plt.ylabel('number of clusters')
-	# #------------------------
+	#------------------------
 
 	#------------------------
-	# data = ft.get_cluster_quantitive_info  (first_site_df, args.clusterDistance, args.clusterLength)
+	# data = ft.get_cluster_quantitive_info  (filtered_first, args.clusterDistance, args.clusterLength)
 
 	# plt.plot(data[2], data[1], '.')
 	# plt.xlabel('length of cluster\n(min len - 10, max dist - 500)') 
@@ -160,7 +210,11 @@ second_site_df = TsvReader.read_tsv(args.secondFilePath)
 plt.show()
 #-------------------------------------
 
-ft.find_intersecting_clusters (first_site_df, second_site_df, args.clusterDistance, args.clusterLength) 
+# ft.find_intersecting_clusters_between_two (first_site_df, second_site_df, args.clusterDistance, args.clusterLength,
+# 							   								  args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
+
+ft.find_intersecting_clusters_between_three (first_site_df, second_site_df, third_site_df, args.clusterDistance, args.clusterLength,
+							                 args.absoluteSubstitution, args.fullCoverage, args.relativeSubstitution) 
 
 
 #-------------------------------------
