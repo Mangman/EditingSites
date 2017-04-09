@@ -40,8 +40,8 @@ def filter_by_relative_substitution (site_df, threshold) :
 
 #  Applies all the filters on sites dataFrame
 def filter_df (site_df, absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold) :
-	print "\n--------------------------------------------------------------\n\
-	       \rStarted DataFrame filtering.\n"
+	# print "\n--------------------------------------------------------------\n\
+	#        \rStarted DataFrame filtering.\n"
 
 	tic = time.clock()
 
@@ -54,9 +54,9 @@ def filter_df (site_df, absolute_substitution_threshold, coverage_threshold, rel
 	toc = time.clock()
 	execution_duration = toc-tic
 
-	print "\nEndend filtering process. Time estimated - {0}\n\
-	   	   \r--------------------------------------------------------------\n"\
-	   	   .format(execution_duration)
+	# print "\nEndend filtering process. Time estimated - {0}\n\
+	#    	   \r--------------------------------------------------------------\n"\
+	#    	   .format(execution_duration)
 
 	return relative_filtered
 
@@ -243,36 +243,83 @@ def find_intersecting_clusters_between_two (site_df1, site_df2, clusterDistance,
 	clusters1 = get_clusters(filtered1, clusterDistance, clusterLength)
 	clusters2 = get_clusters(filtered2, clusterDistance, clusterLength)
 
-	filtered_clusters, number_of_intersections = find_common (clusters1, clusters2)
+	filtered_clusters, number_of_intersections, percents = find_common (clusters1, clusters2)
 	
-	print filtered_clusters[0][2]
-	
-	print len(clusters1[0]) + len(clusters1[1])
-	print len(clusters2[0]) + len(clusters2[1])
+	# print len(clusters1[0]) + len(clusters1[1])
+	# print len(clusters2[0]) + len(clusters2[1])
 	
 	print "Number of intersections -- {0}".format(number_of_intersections)
+
+	site_reproduction = np.array(percents).mean()
+
+	return filtered_clusters, number_of_intersections, site_reproduction
 
 def find_common (clusters1, clusters2) :
 	filtered_clusters = []
 	number_of_intersections = 0
+	percents = []
 
 	#  TODO: слишком просто
 	for strand1, strand2 in zip(clusters1, clusters2) :
 		filtered_clusters.append([])
+		cl1_pos = 0
+
 		for cl1 in strand1 :
 			
-			for cl2 in strand2 :
-				
+			cl2_pos = 0
+			iter_strand = iter(strand2)
+			
+			for cl2 in iter_strand :
 				if cl1[0].seqnames == cl2[0].seqnames :
-					val = check_cluster_intersection(cl1, cl2, 0)
+					intersects, merged, percentage = check_cluster_intersection(cl1, cl2, 0)
 					
 					# val = [Bool, merged_cluster]
-					if val[0] == True :
+					if intersects :
 						
 						number_of_intersections += 1
-						filtered_clusters[-1].append(val[1])
+						filtered_clusters[-1].append(merged)
+						percents.append(percentage)
+
+						number_of_intersections += find_consecutive(cl1, iter_strand, cl1_pos, cl2_pos, filtered_clusters, percents, 0)
 						break
-	return filtered_clusters, number_of_intersections
+				cl2_pos += 1
+			cl1_pos += 1
+	
+	return filtered_clusters, number_of_intersections, percents
+
+def exclude (clusters1, clusters2) :
+	filtered_clusters = []
+
+	for strand1, strand2 in zip(clusters1, clusters2) :
+		filtered_clusters.append([])
+		for cl in strand1 :
+			if find_cluster(cl, strand2) == False :
+				filtered_clusters[-1].append(cl)
+	return filtered_clusters
+
+def find_cluster(cluster, clusters) :
+	for cl in clusters :
+		if cl[0].seqnames == cluster[0].seqnames :
+			if cluster[0] in cl:
+				return True 
+	return False
+
+def find_consecutive (cl, iter_strand, cl1_pos, cl2_pos, filtered_clusters, percents, intersections) :
+	try :
+		next_cl = next(iter_strand) 
+		if cl[0].seqnames == next_cl[0].seqnames :
+			intersects, merged, percentage = check_cluster_intersection(cl, next_cl, 0)
+			if intersects :
+				
+				intersections += 1
+				filtered_clusters[-1].append(merged)
+				percents.append(percentage)
+
+				return find_consecutive(cl, iter_strand, cl1_pos, cl2_pos+1, filtered_clusters, percents, intersections)
+		return intersections
+	except :
+		return intersections							
+
 
 def find_common_with_graph (clusters1, clusters2, graph, name1, name2) :
 	#  TODO: слишком просто
@@ -293,13 +340,13 @@ def find_common_with_graph (clusters1, clusters2, graph, name1, name2) :
 					if val[0] == True :
 						number_of_intersections += 1
 						graph.add_edge (name1+"{}".format(cl1_pos), name2+"{}".format(cl2_pos))
-						number_of_intersections += find_consecutive(cl1, iter_strand2, cl1_pos, cl2_pos, graph, name1, name2, 0)
+						number_of_intersections += find_consecutive_g(cl1, iter_strand2, cl1_pos, cl2_pos, graph, name1, name2, 0)
 						break
 				cl2_pos += 1
 			cl1_pos += 1
 	return number_of_intersections
 
-def find_consecutive (cl, iter_strand, cl1_pos, cl2_pos, graph, name1, name2, intersections) :
+def find_consecutive_g (cl, iter_strand, cl1_pos, cl2_pos, graph, name1, name2, intersections) :
 	try :
 		next_cl = next(iter_strand) 
 		if cl[0].seqnames == next_cl[0].seqnames :
@@ -354,18 +401,35 @@ def check_cluster_intersection (cl1, cl2, intersection) :
 
 	#Sort
 	if (rb1 >= rb2 and lb1 <= rb2-intersection):
-		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
-		return True, new_cluster
+		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))	
+
+		non_common_sites = set(map(lambda x: x.pos, cl1)+map(lambda x: x.pos, cl2))
+	
+
+		return True, new_cluster, mean_percentage(len(cl1), len(cl2), len(non_common_sites))
+
 	elif (lb1 <= lb2 and rb1 >= lb2+intersection):
 		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
-		return True, new_cluster
+		
+		non_common_sites = set(map(lambda x: x.pos, cl1)+map(lambda x: x.pos, cl2))
+	
+		return True, new_cluster, mean_percentage(len(cl1), len(cl2), len(non_common_sites))
+	
 	elif (lb1 >= lb2 and rb1 <= rb2) :
 		new_cluster = sorted(cl1+cl2, key=operator.attrgetter('pos'))		
-		return True, new_cluster
+		
+		non_common_sites = set(map(lambda x: x.pos, cl1)+map(lambda x: x.pos, cl2))
+	
+		return True, new_cluster, mean_percentage(len(cl1), len(cl2), len(non_common_sites))
 	else : 
-		return False, []
+		return False, [], -1
 
-def check_reproducibility (site_df1, site_df2, site_df3, clusterDistance, clusterLength, 
+def mean_percentage(len1, len2, len_intersection) :
+	diff = (len1+len2-len_intersection)
+	percentage = 100*(diff/float(len1)+diff/float(len2))/2
+	return percentage
+
+def check_reproducibility_between_three (site_df1, site_df2, site_df3, clusterDistance, clusterLength, 
 								absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold) :
 	
 	filtered1 = filter_df (site_df1, absolute_substitution_threshold, coverage_threshold, relative_substitution_threshold)
@@ -380,23 +444,63 @@ def check_reproducibility (site_df1, site_df2, site_df3, clusterDistance, cluste
 	with open("clusters.txt") as f:
 		common_clusters = eval(f.readlines()[0])
 	
+	percents = []
+
+	sites = []
+
+	all_the_stuff = []
+
 	for strand1, strand2, strand3, common_clusters in zip(clusters1, clusters2, clusters3, common_clusters) :
+		sites.append([])
+		all_the_stuff.append([])
+
+		
 		for cl in common_clusters :
 			sites1 = []
 			sites2 = []
-			sites3 = []	
+			sites3 = []
+
+			all_the_stuff1 = []
+			all_the_stuff2 = []
+			all_the_stuff3 = []
+
 
 			for little_cl in cl :
 				if little_cl[0] == 'a' :
-					sites1 = get_sites(strand1, int(little_cl[1:]))
+					sites1 += get_sites(strand1, int(little_cl[1:]))
+					all_the_stuff1 += (strand1[int(little_cl[1:])])
 				if little_cl[0] == 'b' :
-					sites2 = get_sites(strand2, int(little_cl[1:]))
+					sites2 += get_sites(strand2, int(little_cl[1:]))
+					all_the_stuff2 +=(strand2[int(little_cl[1:])])
 				if little_cl[0] == 'c' :
-					sites3 = get_sites(strand3, int(little_cl[1:]))	
+					sites3 += get_sites(strand3, int(little_cl[1:]))
+					all_the_stuff3 += (strand3[int(little_cl[1:])])	
+			
+			common_sites = common_for_three(sites1,sites2,sites3)
 
-			print "Whole sites -- {0} Common sites -- {1}".format(len(sites1)+len(sites2)+len(sites3),
-																	len(set(sites1+sites2+sites3)))			
+			all_the_stuff[-1].append(sorted(all_the_stuff1+all_the_stuff2+all_the_stuff3, key=operator.attrgetter('pos')))
+			sites[-1] += list(set(sites1+sites2+sites3))
+
+			percents.append(mean_percentage3(len(sites1), len(sites2), len(sites3), len(common_sites)))
+	
+		
+	mean = np.array(percents).mean()
+	print "Mean common sites percentage -- {0}".format(mean)
+	print "Number of intersections -- {0}".format(len(all_the_stuff[0])+len(all_the_stuff[1]))
+
+
+
+	return all_the_stuff
+
+
+def common_for_three (sites1, sites2, sites3) :
+	return set(sites1) & set(sites2) & set(sites3)
+
+def mean_percentage3(len1, len2, len3, len_intersection) :
+	percentage = 100*(len_intersection/float(len1)+len_intersection/float(len2)+len_intersection/float(len3))/3
+	return percentage
+
 
 def get_sites(clusters, cluster_num) :
-	return map(lambda x: x.pos ,clusters[cluster_num])
+	return map(lambda x: x.pos, clusters[cluster_num])
 
